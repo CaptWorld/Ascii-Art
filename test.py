@@ -49,6 +49,10 @@ class PixelToBrightness:
         return round(0.21 * pixel[0] + 0.72 * pixel[1] + 0.07 * pixel[2])
 
 
+def invert_brightness(brightness_of_pixel: int) -> int:
+    return 255 - brightness_of_pixel
+
+
 def brightness_pixel_to_ascii(brightness_of_pixel: int) -> str:
     return BRIGHTNESS_PIXEL_TO_ASCII_MAP[
         floor(brightness_of_pixel / 256 * len(BRIGHTNESS_PIXEL_TO_ASCII_MAP))
@@ -89,6 +93,10 @@ if __name__ == "__main__":
 
     brightness_matrix: List[List[int]] = transform_matrix(
         pixel_matrix, PixelToBrightness.LUMINOSITY
+    )
+
+    brightness_matrix = transform_matrix(
+        brightness_matrix, invert_brightness
     )
 
     ascii_matrix: List[List[str]] = transform_matrix(
